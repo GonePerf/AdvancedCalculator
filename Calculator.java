@@ -30,17 +30,14 @@ public class Calculator extends JFrame implements ActionListener {
                             sValues[i] = sValues[i].substring(0, sValues[i].length() - 1);
                         }
                     }
-                    //System.out.println(sValues[i]);
                 }
 
 
                 for (int i = 0; i < sValues.length; i++) {
-                    //System.out.println(value);
                     if (sValues[i].length() == 0) sValues[i + 1] = "-" + sValues[i + 1];
                     else {
-                        //System.out.println(sValues[i]);
                         if(sValues[i].charAt(sValues[i].length()-1) == ')' && sValues[i].charAt(0) != '(') sValues[i] = sValues[i].substring(0,sValues[i].length()-2);
-                        //System.out.println(sValues[i]);
+                 
                         dValues.add(Double.parseDouble(sValues[i]));
                     }
                 }
@@ -57,22 +54,16 @@ public class Calculator extends JFrame implements ActionListener {
                     }
                 }
                 result = dValues.get(0);
-                //System.out.println(dValues.get(1));
                 for (int i = 0; i < operation.size(); i++) {
                     if (operation.get(i) == "+") result += dValues.get(i + 1);
                     else if (operation.get(i) == "-") {
-                        //if(dValues.indexOf(i+1) ==  -1) break;
                         result -= dValues.get(i + 1);
                     }
                 }
-            /*if (Double.isInfinite(result)) {
-                return "Dividing by zero!!";
-            } else {*/
                 return String.valueOf(result);
-                //}
+                
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                //System.out.println(value + "< ---");
                 return "error";
             }
         }
@@ -88,7 +79,6 @@ public class Calculator extends JFrame implements ActionListener {
             else if (equation.charAt(i) == '/') operations.add("/");
             else if (equation.charAt(i) == '+') operations.add("+");
             else if (equation.charAt(i) == '-') {
-                //System.out.println(equation);
                 if(i != 0 && (equation.charAt(i-1) == '-' ||
                 equation.charAt(i-1) == '*' ||
                 equation.charAt(i-1) == '/' ||
@@ -131,18 +121,9 @@ public class Calculator extends JFrame implements ActionListener {
         int from,to, i;
         int nawiasy =0;
         int licznik = 0;
-       /* if(equation.charAt(0) == '(' && equation.charAt(equation.length()-1) == ')') {
-            for(i = 0; i < equation.length(); i++){
-                if(equation.charAt(i) == ')' && i != equation.length()-1);
-                else equation = equation.substring(1,equation.length()-1);
-                break;
-            }
-
-        }*/
+      
 
         while(true) {
-            //System.out.println(equation);
-            //if(expSqrts.isEmpty()) break;
             from = -2;
             to = 0;
             int dlugosc =0;
@@ -153,13 +134,9 @@ public class Calculator extends JFrame implements ActionListener {
                     break;
                 }
             }
-            //System.out.println(from);
-            //System.out.println();
             if(from == -2){
-                //System.out.println("WYJEBANE");
                 break;
             }
-            //else if(expSqrts.isEmpty()) break;
             else{
                 if(equation.charAt(from+1) == '(') {
                     for (i = from + 2; i < equation.length(); i++) {
@@ -168,17 +145,17 @@ public class Calculator extends JFrame implements ActionListener {
 
                         }
                         else if (equation.charAt(i) == ')' && nawiasy == 0) {
-                            //System.out.println("xD");
+                          
                             to = i+1;
                             break;
                         }
                         else if(equation.charAt(i) == ')') nawiasy --;
-                        //System.out.println(from);
+                     
                     }
 
                     dlugosc = equation.substring(from+1,to).length();
                     wykladnik = Double.parseDouble(functions(equation.substring(from+1,to)));
-                    //System.out.println(wykladnik);
+                
                 }
                 else if(equation.charAt(from+1) == 'l' || equation.charAt(from+1) == 's' || equation.charAt(from+1) == 'c'
                 || equation.charAt(from+1) == 't'){
@@ -206,88 +183,26 @@ public class Calculator extends JFrame implements ActionListener {
                     }
                     dlugosc = equation.substring(from+1,to).length();
                     wykladnik = Double.parseDouble(functions(equation.substring(from+1,to)));
-                    //System.out.println(wykladnik);
+                   
                 }
                 else{
                     String[] wyk = equation.substring(from+1).split("[\\+\\-\\*\\/\\)]");
                     dlugosc = wyk[wyk.length-1].length();
                     wykladnik = Double.parseDouble(functions(wyk[wyk.length-1]));
-                    //System.out.println(to);
+                    
                 }
 
-                //System.out.println(dlugosc + "  dl ");
                 equation = equation.substring(0,from - Integer.parseInt(expSqrts.get(1))) + "(" + Math.pow(Double.parseDouble(expSqrts.get(0)),wykladnik) + ")" + equation.substring(from +1 + dlugosc);
-                //lResult.setText(equation);
-                //System.out.println(equation);
+              
 
                     expSqrts.remove(1);
                     expSqrts.remove(0);
 
 
             }
-            //if(expSqrts.isEmpty()) break;
-
-          /*  from = -2;
-            to = 0;
-            for (i = equation.length()-1; i <=0; i--) {
-                if (equation.charAt(i) == '^') {
-                    from = i + 2;
-                    break;
-                }
-            }
-            if(from == -2) break;
-            for(i = from; i < equation.length(); i++){
-                if(equation.charAt(i) == '('){
-                    nawiasy++;
-                }
-                else if(equation.charAt(i) == ')'){
-                    if(nawiasy == 0){
-                        to = i;
-                        break;
-                    }
-                    nawiasy --;
-                }
-            }
-
-            if(to == 0) {
-                for(i = from-1; i < equation.length(); i++){
-                    if(equation.charAt(i) == '+'
-                            || equation.charAt(i) == '*'
-                            || equation.charAt(i) == '/'
-                            || equation.charAt(i) == '-'){
-                        to = i;
-                        break;
-                    }
-                    to = equation.length();
-
-                }
-                double x,y;
-                x = Double.parseDouble(expSqrts.get(0));
-                y = Double.parseDouble(functions(equation.substring(from-1,to)));
-                System.out.println(x);
-                System.out.println(y);
-                System.out.println(expSqrts.get(1));
-                System.out.println(from-1 + "   " + to);
-                System.out.println(equation);
-                //equation = equation.substring(0,to - Integer.parseInt(expSqrts.get(1)));
-                if(from - Integer.parseInt(expSqrts.get(1)) <= 0) equation = String.valueOf(Math.pow(Double.parseDouble(expSqrt(expSqrts.get(0))), Double.parseDouble(functions(equation.substring(from-1,to))))) + equation.substring(to);
-                else equation = equation.substring(0,from-Integer.parseInt(expSqrts.get(1))-2) + String.valueOf(Math.pow(Double.parseDouble(expSqrts.get(0)), Double.parseDouble(functions(equation.substring(from-1,to))))) + equation.substring(to);
-
-
-                expSqrts.remove(1);
-                expSqrts.remove(0);
-            }
-            else {
-                System.out.println(equation.substring(from,to));
-                if(from - Integer.parseInt(expSqrts.get(1)) -2 == 0) equation =  String.valueOf(Math.pow(Double.parseDouble(functions(expSqrts.get(0))), Double.parseDouble(functions(equation.substring(from - 1, to + 1))))) + equation.substring(to + 1);
-                else equation = equation.substring(0,from - Integer.parseInt(expSqrts.get(1))) + String.valueOf(Math.pow(Double.parseDouble(expSqrts.get(0)),Double.parseDouble(functions(equation.substring(from,to))))) + equation.substring(to+1);
-
-
-                expSqrts.remove(1);
-                expSqrts.remove(0);
-            }*/
+            
+         
         }
-        //System.out.println(equation);
 
         while(true) {
             from = -2;
@@ -312,7 +227,6 @@ public class Calculator extends JFrame implements ActionListener {
                 }
             }
 
-            //System.out.println(from);
             equation = equation.substring(0,from-4) + String.valueOf(Math.log10(Double.parseDouble(functions(equation.substring(from,to))))) + equation.substring(to+1);
 
             licznik ++;
@@ -429,12 +343,10 @@ public class Calculator extends JFrame implements ActionListener {
 
             licznik ++;
         }
-        //System.out.println(equation+" zanim ten");
         return expSqrt(equation);
 
     }
     String expSqrt(String equation){
-        //search for exponents
         int from,to, i;
         int nawiasy =0;
 
@@ -452,7 +364,6 @@ public class Calculator extends JFrame implements ActionListener {
             if(equation.charAt(from) == '-') return "error";
             for(i = from; i < equation.length(); i++){
 
-                //if(equation.charAt(from) != '(') break;
                 if(equation.charAt(i) == '('){
                     nawiasy++;
                 }
@@ -763,12 +674,7 @@ public class Calculator extends JFrame implements ActionListener {
         bPercent.setForeground(WHITE);
         add(bPercent);
         bPercent.addActionListener(this);
-/*
-        bModulo = new JButton();
-        bModulo.setBounds(250,440,70,30);
-        bModulo.setText("Mod");
-        add(bModulo);
-        bModulo.addActionListener(this); */
+
 
         bStartGroup = new JButton();
         bStartGroup.setBounds(265,155,60,60);
@@ -914,9 +820,7 @@ public class Calculator extends JFrame implements ActionListener {
            if(lResult.getText().isEmpty()) lResult.setText("0");
            else if(lResult.getText().equals("error")) ;
            else {
-                /*if(Double.isInfinite(Double.parseDouble(functions(lResult.getText())))) lResult.setText("Dividing by zero!");
-
-                else */
+               
                 String wynik = functions(lResult.getText());
                 if(wynik.equals("error")) lResult.setText("Chuy wie");
                 else wynik = (df.format(Double.parseDouble(wynik)));
@@ -1213,10 +1117,6 @@ public class Calculator extends JFrame implements ActionListener {
                             result = Double.parseDouble(functions(lResult.getText().substring(from - 3)));
                         }
                     }
-                    /*else{
-                        size = podstawa[podstawa.length-1].length();
-                        result = Double.parseDouble(functions(podstawa[podstawa.length-1]));
-                    }*/
 
                 }
                 else {
@@ -1235,80 +1135,14 @@ public class Calculator extends JFrame implements ActionListener {
                         }
                         else podstawa[podstawa.length-1] = podstawa[podstawa.length-1].substring(3);
                     }
-                    //if(podstawa[podstawa.length-1].charAt(0) == '(') podstawa[podstawa.length-1] = podstawa[podstawa.length-1].substring(1);
                     size = podstawa[podstawa.length-1].length();
                     result = Double.parseDouble(functions(podstawa[podstawa.length-1]));
                 }
-                //lResult.setText(String.valueOf(result +" "+size));
-                //System.out.println(result + "   " + size);
                 expSqrts.add(0,String.valueOf(result));
                 expSqrts.add(1,String.valueOf(size));
                 lResult.setText(lResult.getText()+"^");
             }
-
-
-
-
-              /*  double x;
-                int nawiasy =0;
-                String[] lastnum = lResult.getText().split("[\\^\\(\\+\\*\\-\\/]");
-                if(lastnum.length >=3 ) {
-                    if (lastnum[lastnum.length - 2].length() == 0 && !(lastnum[lastnum.length - 3].equals("log") ||
-                            lastnum[lastnum.length - 3].equals("sin") ||
-                            lastnum[lastnum.length - 3].equals("cos") ||
-                            lastnum[lastnum.length - 3].equals("ln") ||
-                            lastnum[lastnum.length - 3].equals("tg"))) {
-
-                        lastnum[lastnum.length - 1] = "-" + lastnum[lastnum.length - 1];
-                    }
-                }
-                if(lResult.getText().charAt(lResult.getText().length()-1) == ')'){
-                    int from = 0;
-                    for(int i = lResult.getText().length() - 2; i >= 0; i--){
-                        if(lResult.getText().charAt(i) == ')'){
-                            nawiasy++;
-
-                        }
-                        else if(lResult.getText().charAt(i) == '('){
-                            if(nawiasy == 0){
-                                from = i;
-
-
-                                if(lastnum[lastnum.length-2].equals("log") ||
-                                        lastnum[lastnum.length-2].equals("sin") ||
-                                        lastnum[lastnum.length-2].equals("cos") ||
-                                        lastnum[lastnum.length-2].equals("ln") ||
-                                        lastnum[lastnum.length-2].equals("tg")){
-
-                                    x = Double.parseDouble(functions(lResult.getText().substring(i - lastnum[lastnum.length-2].length())));
-                                    expSqrts.add(0,String.valueOf(x));
-                                    expSqrts.add(1,String.valueOf(lResult.getText().substring(i).length() + lastnum[lastnum.length-2].length()));
-
-                                } else {
-                                    x = Double.parseDouble(functions(lResult.getText().substring(i)));
-                                    expSqrts.add(0, String.valueOf(x));
-                                    expSqrts.add(1, String.valueOf(lResult.getText().substring(i).length()));
-                                   // System.out.println();
-                                   // System.out.println();
-                                }
-
-                            }
-                            else nawiasy --;
-                        }
-
-                    }
-                }
-                else if(lResult.getText().charAt(lResult.getText().length()-1) == '.');
-                else{
-                    System.out.println();
-                    System.out.println(lastnum[lastnum.length-1]);
-                       x = Double.parseDouble(functions(lastnum[lastnum.length - 1]));
-                        expSqrts.add(0,String.valueOf(x));
-                        expSqrts.add(1,String.valueOf(lastnum[lastnum.length-1].length()));
-
-                }
-                lResult.setText(lResult.getText() + "^");
-            }*/
+   
         }
 
         else if(button == bRoot){
